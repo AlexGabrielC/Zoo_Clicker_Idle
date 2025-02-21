@@ -28,6 +28,7 @@ yarn-error.*
 # macOS
 .DS_Store
 *.pem
+.idea
 
 # local env files
 .env*.local
@@ -36,3 +37,5 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+package-lock.json

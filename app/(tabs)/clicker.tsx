@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import SvgBearIdle0 from "@/components/bearIdle0Svg";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { GameContext } from "../context/GameContext"; // Ajustez le chemin selon votre structure
 
-const Clicker: React.FC = () => {
-    const { caca, setCaca, cacaPerClick } = useContext(GameContext);
-    const [currentFrame, setCurrentFrame] = useState<number>(0);
-    const [isHurt, setIsHurt] = useState<boolean>(false);
-    const [cacaPerSecond, setCacaPerSecond] = useState<number>(0); // Caca gagné par seconde
+export default function Clicker() {
+    const [caca, setCaca] = useState(0); // Utilisation de useState pour gérer le caca
+    const [currentFrame, setCurrentFrame] = useState(0); // Frame actuelle de l'animation
+    const [isHurt, setIsHurt] = useState(false); // État pour déterminer si l'ours est blessé
 
-    // Animation "idle" et "hurt" (comme dans votre code actuel)
+    // Animation "idle"
     const idleFrames = [
         require("../../assets/animations/idle/FA_TEDDY_Idle_000.png"),
         require("../../assets/animations/idle/FA_TEDDY_Idle_001.png"),
@@ -34,13 +33,8 @@ const Clicker: React.FC = () => {
         require("../../assets/animations/hurt/FA_TEDDY_Hurt_005.png"),
     ];
 
+    // Choisir le bon tableau d'images en fonction de l'état (idle ou hurt)
     const frames = isHurt ? hurtFrames : idleFrames;
-
-    const handleClick = () => {
-        setCaca(caca + cacaPerClick); // Ajoute du caca en fonction de cacaPerClick
-        setIsHurt(true);
-        setTimeout(() => setIsHurt(false), 500);
-    };
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -50,26 +44,26 @@ const Clicker: React.FC = () => {
         return () => clearInterval(interval); // Cleanup de l'intervalle lors du démontage du composant
     }, [isHurt]); // Recréer l'intervalle lorsque l'état de l'animation change
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCaca((prev: number) => prev + cacaPerSecond); // Ajoute du caca chaque seconde
-        }, 1000);
+    const handleClick = () => {
+        setCaca(caca + 1); // À chaque clic, on ajoute un caca
+        setIsHurt(true); // Mettre l'état "hurt" quand on clique
+        setTimeout(() => setIsHurt(false), 500); // Revenir à l'animation "idle" après 500ms
+    };
 
-        return () => clearInterval(interval);
-    }, [cacaPerSecond]);
-    
     return (
         <View style={styles.container}>
             <Text style={styles.title}>💩 Caca: {caca}</Text>
 
+            {/* Affichage de l'ours avec animation */}
             <TouchableOpacity onPress={handleClick}>
                 <Image source={frames[currentFrame]} style={styles.image} />
             </TouchableOpacity>
 
             <Text style={styles.text}>Cliquez sur l'ours pour gagner des cacas !</Text>
+            <SvgBearIdle0 />
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
