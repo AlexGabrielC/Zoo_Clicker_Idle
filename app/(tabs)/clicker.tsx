@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { GameContext } from "../context/GameContext"; // Importez le contexte
+import { GameContext } from "@/context/GameContext"; // Importez le contexte
 import * as Notifications from 'expo-notifications';
 import { AppState } from 'react-native';
 

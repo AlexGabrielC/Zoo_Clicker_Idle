@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image, Modal, Button } from "react-native";
-import { GameContext } from "../context/GameContext"; // Importez le contexte
+import { GameContext } from "@/context/GameContext"; // Importez le contexte
 import { useNavigation, useFocusEffect } from "@react-navigation/native"; // Importez useNavigation et useFocusEffect
 
 export default function TimedClicker() {
