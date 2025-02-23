@@ -1,9 +1,9 @@
-import SvgBearIdle0 from "@/components/bearIdle0Svg";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { GameContext } from "../context/GameContext"; // Importez le contexte
 
 export default function Clicker() {
-    const [caca, setCaca] = useState(0); // Utilisation de useState pour gérer le caca
+    const { caca, setCaca, cacaPerClick } = useContext(GameContext); // Utilisez le contexte
     const [currentFrame, setCurrentFrame] = useState(0); // Frame actuelle de l'animation
     const [isHurt, setIsHurt] = useState(false); // État pour déterminer si l'ours est blessé
 
@@ -45,7 +45,7 @@ export default function Clicker() {
     }, [isHurt]); // Recréer l'intervalle lorsque l'état de l'animation change
 
     const handleClick = () => {
-        setCaca(caca + 1); // À chaque clic, on ajoute un caca
+        setCaca(caca + cacaPerClick); // À chaque clic, on ajoute du caca en fonction de cacaPerClick
         setIsHurt(true); // Mettre l'état "hurt" quand on clique
         setTimeout(() => setIsHurt(false), 500); // Revenir à l'animation "idle" après 500ms
     };
@@ -60,7 +60,6 @@ export default function Clicker() {
             </TouchableOpacity>
 
             <Text style={styles.text}>Cliquez sur l'ours pour gagner des cacas !</Text>
-            <SvgBearIdle0 />
         </View>
     );
 }
@@ -87,4 +86,3 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Clicker;

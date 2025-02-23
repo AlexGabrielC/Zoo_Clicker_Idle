@@ -1,49 +1,52 @@
-import { useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { GameContext } from "../context/GameContext"; // Ajustez le chemin selon votre structure
-import React from "react";
+import { GameContext } from "../context/GameContext"; // Importez le contexte
 
 interface Upgrade {
-    bought: boolean;
-    cost: number;
-    effect: number;
+    name: string;
+    baseCost: number;
+    costMultiplier: number;
+    baseEffect: number;
+    effectMultiplier: number;
+    count: number;
+    type: "click" | "passive"; // Type d'amélioration
 }
 
 const Upgrades: React.FC = () => {
     const { caca, setCaca, setCacaPerClick, setCacaPerSecond } = useContext(GameContext);
-    const [upgrades, setUpgrades] = useState<Record<string, Upgrade>>({
-        peanutButter: { bought: false, cost: 10, effect: 1 }, // +1 caca par clic
-        miel: { bought: false, cost: 50, effect: 5 }, // +5 caca par clic
-        ruche: { bought: false, cost: 100, effect: 10 }, // +10 caca par seconde
-        abeilles: { bought: false, cost: 200, effect: 20 }, // +20 caca par seconde
-        saumon: { bought: false, cost: 500, effect: 50 }, // +50 caca par clic
-        thon: { bought: false, cost: 1000, effect: 100 }, // +100 caca par seconde
-        pluieDeCaca: { bought: false, cost: 2000, effect: 200 }, // +200 caca par seconde
-        avalancheDeCaca: { bought: false, cost: 5000, effect: 500 }, // +500 caca par clic
-        cacaDor: { bought: false, cost: 10000, effect: 1000 }, // +1000 caca par seconde
-        cacaArcEnCiel: { bought: false, cost: 15000, effect: 1500 }, // +1500 caca par seconde
-        cacaRose: { bought: false, cost: 20000, effect: 2000 }, // +2000 caca par seconde
-    });
 
-    const buyUpgrade = (upgradeKey: string) => {
-        const upgrade = upgrades[upgradeKey];
-        if (caca >= upgrade.cost && !upgrade.bought) {
-            setCaca(caca - upgrade.cost); // Dépenser le caca
-            setUpgrades({
-                ...upgrades,
-                [upgradeKey]: { ...upgrade, bought: true },
-            });
+    // Liste des améliorations
+    const [upgrades, setUpgrades] = useState<Upgrade[]>([
+        { name: "Peanut Butter", baseCost: 10, costMultiplier: 1.15, baseEffect: 1, effectMultiplier: 1.1, count: 0, type: "click" },
+        { name: "Miel", baseCost: 50, costMultiplier: 1.15, baseEffect: 5, effectMultiplier: 1.1, count: 0, type: "click" },
+        { name: "Ruche", baseCost: 100, costMultiplier: 1.15, baseEffect: 10, effectMultiplier: 1.1, count: 0, type: "passive" },
+        { name: "Abeilles", baseCost: 200, costMultiplier: 1.15, baseEffect: 20, effectMultiplier: 1.1, count: 0, type: "passive" },
+        { name: "Saumon", baseCost: 500, costMultiplier: 1.15, baseEffect: 50, effectMultiplier: 1.1, count: 0, type: "click" },
+        { name: "Thon", baseCost: 1000, costMultiplier: 1.15, baseEffect: 100, effectMultiplier: 1.1, count: 0, type: "passive" },
+        { name: "Pluie de caca", baseCost: 2000, costMultiplier: 1.15, baseEffect: 200, effectMultiplier: 1.1, count: 0, type: "click" },
+        { name: "Avalanche de caca", baseCost: 4000, costMultiplier: 1.15, baseEffect: 400, effectMultiplier: 1.1, count: 0, type: "passive" },
+        { name: "Caca d’or", baseCost: 8000, costMultiplier: 1.15, baseEffect: 800, effectMultiplier: 1.1, count: 0, type: "click" },
+        { name: "Caca arc en ciel", baseCost: 16000, costMultiplier: 1.15, baseEffect: 1600, effectMultiplier: 1.1, count: 0, type: "passive" },
+    ]);
+
+    // Fonction pour acheter une amélioration
+    const buyUpgrade = (upgrade: Upgrade) => {
+        const cost = Math.floor(upgrade.baseCost * Math.pow(upgrade.costMultiplier, upgrade.count));
+        if (caca >= cost) {
+            setCaca(caca - cost); // Dépenser le caca
+
+            // Mettre à jour le nombre d'achats
+            const updatedUpgrades = upgrades.map((u) =>
+                u.name === upgrade.name ? { ...u, count: u.count + 1 } : u
+            );
+            setUpgrades(updatedUpgrades);
 
             // Appliquer l'effet de l'amélioration
-            if (
-                upgradeKey === "peanutButter" ||
-                upgradeKey === "miel" ||
-                upgradeKey === "saumon" ||
-                upgradeKey === "avalancheDeCaca"
-            ) {
-                setCacaPerClick((prev: number) => prev + upgrade.effect); // Amélioration par clic
+            const effect = Math.floor(upgrade.baseEffect * Math.pow(upgrade.effectMultiplier, upgrade.count));
+            if (upgrade.type === "click") {
+                setCacaPerClick((prev: number) => prev + effect); // Amélioration par clic
             } else {
-                setCacaPerSecond((prev: number) => prev + upgrade.effect); // Amélioration passive
+                setCacaPerSecond((prev: number) => prev + effect); // Amélioration passive
             }
         }
     };
@@ -52,22 +55,27 @@ const Upgrades: React.FC = () => {
         <View style={styles.container}>
             <Text style={styles.title}>Améliorations disponibles :</Text>
 
-            {Object.entries(upgrades).map(([key, upgrade]) => (
-                <TouchableOpacity
-                    key={key}
-                    style={[styles.upgradeButton, upgrade.bought && styles.boughtButton]}
-                    onPress={() => buyUpgrade(key)}
-                    disabled={upgrade.bought || caca < upgrade.cost}
-                >
-                    <Text style={styles.upgradeText}>
-                        {key} - Coût : {upgrade.cost} caca
-                    </Text>
-                    <Text style={styles.upgradeEffect}>
-                        Effet : {upgrade.effect} {key.includes("Clic") ? "par clic" : "par seconde"}
-                    </Text>
-                    {upgrade.bought && <Text style={styles.boughtText}>Acheté</Text>}
-                </TouchableOpacity>
-            ))}
+            {upgrades.map((upgrade) => {
+                const cost = Math.floor(upgrade.baseCost * Math.pow(upgrade.costMultiplier, upgrade.count));
+                const effect = Math.floor(upgrade.baseEffect * Math.pow(upgrade.effectMultiplier, upgrade.count));
+
+                return (
+                    <TouchableOpacity
+                        key={upgrade.name}
+                        style={[styles.upgradeButton, upgrade.count > 0 && styles.boughtButton]}
+                        onPress={() => buyUpgrade(upgrade)}
+                        disabled={caca < cost}
+                    >
+                        <Text style={styles.upgradeText}>
+                            {upgrade.name} (Niveau {upgrade.count + 1})
+                        </Text>
+                        <Text style={styles.upgradeText}>Coût : {cost} caca</Text>
+                        <Text style={styles.upgradeEffect}>
+                            Effet : +{effect} {upgrade.type === "click" ? "par clic" : "par seconde"}
+                        </Text>
+                    </TouchableOpacity>
+                );
+            })}
         </View>
     );
 };
@@ -96,11 +104,6 @@ const styles = StyleSheet.create({
     upgradeEffect: {
         fontSize: 14,
         color: "#555",
-    },
-    boughtText: {
-        fontSize: 14,
-        color: "green",
-        textAlign: "right",
     },
 });
 

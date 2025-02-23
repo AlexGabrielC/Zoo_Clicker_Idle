@@ -18,6 +18,10 @@ export default function TabLayout() {
                     name="upgrade"
                     options={{ title: "Améliorations" }}
                 />
+                <Tabs.Screen
+                    name="timedClicker"
+                    options={{ title: "Contre la Montre" }}
+                />
             </Tabs>
         </GameProvider>
     );
