@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { GameContext } from "../context/GameContext"; // Importez le contexte
+import { GameContext } from "@/context/GameContext"; 
+import React from "react";
 
 interface Upgrade {
     name: string;
