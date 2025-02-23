@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { GameContext } from "../context/GameContext"; // Ajustez le chemin selon votre structure
+import { GameContext } from "../../context/GameContext"; // Ajustez le chemin selon votre structure
 import React from "react";
 
 interface Upgrade {

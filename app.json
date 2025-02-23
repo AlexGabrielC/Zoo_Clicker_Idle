@@ -13,7 +13,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.agoowexpo.Zoo_Clicker_Idle"
     },
     "web": {
       "bundler": "metro",
@@ -35,6 +36,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "8dd4739b-e4b8-4383-acd9-3cbdba6c2716"
+      }
     }
   }
 }

@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { GameProvider } from "../context/GameContext"; // Ajustez le chemin selon votre structure
+import { GameProvider } from "../../context/GameContext"; // Ajustez le chemin selon votre structure
 import React from "react";
 
 export default function TabLayout() {
