@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { GameContext } from "../context/GameContext"; // Importez le contexte
+import * as Notifications from 'expo-notifications';
+import { AppState } from 'react-native';
 
 export default function Clicker() {
     const { caca, setCaca, cacaPerClick } = useContext(GameContext); // Utilisez le contexte
     const [currentFrame, setCurrentFrame] = useState(0); // Frame actuelle de l'animation
     const [isHurt, setIsHurt] = useState(false); // État pour déterminer si l'ours est blessé
+    const [lastActivity, setLastActivity] = useState(Date.now()); // Dernière activité utilisateur
 
     // Animation "idle"
     const idleFrames = [
@@ -35,6 +38,46 @@ export default function Clicker() {
 
     // Choisir le bon tableau d'images en fonction de l'état (idle ou hurt)
     const frames = isHurt ? hurtFrames : idleFrames;
+
+    // Fonction pour gérer l'inactivité et planifier la notification
+    useEffect(() => {
+        const inactivityInterval = setInterval(() => {
+            if (Date.now() - lastActivity > 60 * 1000) {
+                scheduleNotification(); // Si 4 heures sont passées, planifier une notification
+            }
+        }, 60000); // Vérification toutes les 60 secondes
+
+        return () => clearInterval(inactivityInterval); // Nettoyer l'intervalle de vérification d'inactivité
+    }, [lastActivity]);
+
+    const scheduleNotification = async () => {
+
+        await Notifications.scheduleNotificationAsync({
+            content: {
+                title: "Hey, tu es inactif !",
+                body: "Tu n'a pas récuperer le caca de ton ours !",
+            },
+            trigger: {
+                type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, // Le type de trigger : déclenchement basé sur un intervalle de temps
+                seconds: 60, // Temps d'attente avant d'envoyer la notification (ici, 60 secondes)
+            }
+        });
+    };
+
+    // Fonction pour gérer l'ouverture et la fermeture de l'application
+    useEffect(() => {
+        const handleAppStateChange = (nextAppState: string) => {
+            if (nextAppState === 'active') {
+                setLastActivity(Date.now()); // Mise à jour de la dernière activité quand l'app devient active
+            }
+        };
+
+        const appStateListener = AppState.addEventListener('change', handleAppStateChange);
+
+        return () => {
+            appStateListener.remove(); // Nettoyer l'écouteur lors du démontage
+        };
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
