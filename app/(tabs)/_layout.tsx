@@ -26,3 +26,4 @@ export default function TabLayout() {
         </GameProvider>
     );
 }
+
