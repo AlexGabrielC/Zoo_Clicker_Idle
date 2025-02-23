@@ -3,7 +3,6 @@ import React, { createContext, useContext, useEffect, useState, ReactNode } from
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
-// Définissez ici éventuellement les types de l'utilisateur (pour simplifier, nous utilisons any)
 interface AuthContextProps {
   user: any;
   signInWithGoogle: () => Promise<void>;
@@ -25,25 +24,40 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<any>(null);
 
-  // Écouter les changements de l'authentification Firebase
+  // Configure Google Signin (make sure your webClientId is correct)
+  GoogleSignin.configure({
+    webClientId: '868939013927-cbd8ckcj8rj2io62nrd37qa8aasmet65.apps.googleusercontent.com',
+  });
+
   useEffect(() => {
     const unsubscribe = auth().onAuthStateChanged((currentUser) => {
+      console.log('Auth state changed:', currentUser);
       setUser(currentUser);
     });
     return unsubscribe;
   }, []);
 
   const signInWithGoogle = async () => {
+    console.log('signInWithGoogle triggered');
     try {
-      // Vérifier la disponibilité des Google Play Services
+      // Ensure Google Play Services are available
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-      // Lancer le processus de connexion et obtenir l’ID token
-      const { idToken } = (await GoogleSignin.signIn()) as any;
-      // Créer les informations d'identification Firebase à partir du token Google
+      console.log('Google Play Services are available');
+
+      // Launch Google Sign-In flow
+      const result = await GoogleSignin.signIn();
+      console.log('Google Sign-In result:', result);
+
+      const { idToken } = result as unknown as { idToken: string };
+      if (!idToken) {
+        throw new Error('No idToken returned');
+      }
+
+      // Create Firebase credential with the token
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      // Se connecter à Firebase avec les informations d'identification
       await auth().signInWithCredential(googleCredential);
-    } catch (error) {
+      console.log('Firebase sign-in successful');
+    } catch (error: any) {
       console.error('Error during Google sign in: ', error);
       throw error;
     }
@@ -53,8 +67,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       await auth().signOut();
       setUser(null);
-      // Déconnecter également du module Google Sign-In
       await GoogleSignin.signOut();
+      console.log('User signed out successfully');
     } catch (error) {
       console.error('Error during sign out: ', error);
     }

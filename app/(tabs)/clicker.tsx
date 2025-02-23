@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { GameContext } from "@/context/GameContext"; // Importez le contexte
 import * as Notifications from 'expo-notifications';
 import { AppState } from 'react-native';
+import SettingsIcon from "@/components/SettingsIcon";
 
 export default function Clicker() {
     const { caca, setCaca, cacaPerClick } = useContext(GameContext); // Utilisez le contexte
@@ -95,6 +96,7 @@ export default function Clicker() {
 
     return (
         <View style={styles.container}>
+            <SettingsIcon />
             <Text style={styles.title}>💩 Caca: {caca}</Text>
 
             {/* Affichage de l'ours avec animation */}
