@@ -3,9 +3,9 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { GameContext } from "../context/GameContext"; // Importez le contexte
 
 export default function TimedClicker() {
-    const { caca, setCaca, cacaPerClick, cacaPerSecond } = useContext(GameContext); // Utilisez le contexte
+    const { cacaPerClick, cacaPerSecond } = useContext(GameContext); // Utilisez le contexte
     const [timeLeft, setTimeLeft] = useState(60);
-    const [score, setScore] = useState(0);
+    const [score, setScore] = useState(0); // Utilisez un état local pour le score
     const [isGameOver, setIsGameOver] = useState(false);
 
     useEffect(() => {
@@ -20,7 +20,6 @@ export default function TimedClicker() {
     useEffect(() => {
         if (!isGameOver) {
             const interval = setInterval(() => {
-                setCaca((prevCaca) => prevCaca + cacaPerSecond);
                 setScore((prevScore) => prevScore + cacaPerSecond);
             }, 1000);
             return () => clearInterval(interval);
@@ -29,8 +28,7 @@ export default function TimedClicker() {
 
     const handleClick = () => {
         if (!isGameOver) {
-            setCaca(caca + cacaPerClick); // À chaque clic, on ajoute du caca en fonction de cacaPerClick
-            setScore(score + cacaPerClick); // Mettre à jour le score
+            setScore(score + cacaPerClick); // Mettre à jour le score local
         }
     };
 
