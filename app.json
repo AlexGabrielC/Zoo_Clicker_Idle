@@ -8,20 +8,10 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true
-    },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
-    "ios": {
-      "icon": "./assets/images/icon.png",
-      "splash": {
-        "image": "./assets/images/splash.png",
-        "resizeMode": "contain",
         "backgroundColor": "#ffffff"
       }
     },
@@ -32,6 +22,7 @@
     },
     "plugins": [
       "expo-router",
+      "@react-native-google-signin/google-signin",
       [
         "expo-splash-screen",
         {
