@@ -26,39 +26,43 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<Session | null>(null);
 
   useEffect(() => {
-    // Vérifier la session actuelle au chargement
-    const session = supabase.auth.session();
-    setUser(session?.user || null);
+    const fetchSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session);  // On passe 'session' complet ici
+    };
+
+    fetchSession();
 
     // Écouter les changements d'état d'authentification
-    const { data: authListener } = supabase.auth.onAuthStateChange((event: any, session: { user: any; }) => {
-      console.log('Auth state changed:', event, session);
-      setUser(session?.user || null);
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Changement d\'état d\'authentification:', event, session);
+      setUser(session); // Ici, on passe 'session', pas juste 'user'
     });
 
+    // Désabonnement proprement lorsque le composant se démonte
     return () => {
-      authListener?.unsubscribe();
+      authListener.subscription.unsubscribe();
     };
   }, []);
 
   const signUp = async (email: string, password: string) => {
     try {
-      const { user, error } = await supabase.auth.signUp({ email, password });
+      const { data: { user }, error } = await supabase.auth.signUp({ email, password });
       if (error) throw error;
-      setUser(user);
+      setUser({ user, access_token: 'access_token', refresh_token: 'refresh_token' } as Session);  // Remplacez par les données réelles de la session
     } catch (error) {
-      console.error('Error signing up:', error);
+      console.error('Erreur lors de l\'inscription:', error);
       throw error;
     }
   };
 
   const signIn = async (email: string, password: string) => {
     try {
-      const { user, error } = await supabase.auth.signInWithPassword({ email, password });
+      const { data: { user }, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
-      setUser(user);
+      setUser({ user, access_token: 'access_token', refresh_token: 'refresh_token' } as Session);  // Remplacez par les données réelles de la session
     } catch (error) {
-      console.error('Error signing in:', error);
+      console.error('Erreur lors de la connexion:', error);
       throw error;
     }
   };
@@ -69,14 +73,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (error) throw error;
       setUser(null);
     } catch (error) {
-      console.error('Error signing out:', error);
+      console.error('Erreur lors de la déconnexion:', error);
       throw error;
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, signUp, signIn, signOut }}>
-      {children}
-    </AuthContext.Provider>
+      <AuthContext.Provider value={{ user, signUp, signIn, signOut }}>
+        {children}
+      </AuthContext.Provider>
   );
 };
