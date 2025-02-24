@@ -1,12 +1,12 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, ReactNode } from "react";
 
 interface GameContextType {
     caca: number;
     setCaca: (value: number) => void;
     cacaPerClick: number;
-    setCacaPerClick: (value: number) => void;
+    setCacaPerClick: (value: (prev: number) => number) => void;
     cacaPerSecond: number;
-    setCacaPerSecond: (value: number) => void;
+    setCacaPerSecond: (value: (prev: number) => number) => void;
 }
 
 export const GameContext = createContext<GameContextType>({
@@ -18,7 +18,11 @@ export const GameContext = createContext<GameContextType>({
     setCacaPerSecond: () => {},
 });
 
-export const GameProvider: React.FC = ({ children }) => {
+interface GameProviderProps {
+    children: ReactNode;  // Ajout du typage pour la propriété `children`
+}
+
+export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     const [caca, setCaca] = useState<number>(0);
     const [cacaPerClick, setCacaPerClick] = useState<number>(1);
     const [cacaPerSecond, setCacaPerSecond] = useState<number>(0);
@@ -42,7 +46,7 @@ export const GameProvider: React.FC = ({ children }) => {
                 setCacaPerSecond,
             }}
         >
-            {children}
+            {children}  {/* Assurez-vous de rendre les enfants ici */}
         </GameContext.Provider>
     );
 };

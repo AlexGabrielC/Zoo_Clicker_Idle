@@ -1,3 +1,4 @@
+import React from 'react';  // Ajoutez l'importation de React
 import { View, Text } from 'react-native';
 
 function NotFound() {

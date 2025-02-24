@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
 import { GameContext } from "@/context/GameContext"; // Importez le contexte
 import * as Notifications from 'expo-notifications';
 import { AppState } from 'react-native';
@@ -95,17 +95,21 @@ export default function Clicker() {
     };
 
     return (
-        <View style={styles.container}>
+        <ImageBackground
+            source={require("../../assets/images/fond.png")}
+            style={styles.container}
+            imageStyle={{ resizeMode: 'cover', height: '100%', width: '100%' }}
+        >
             <SettingsIcon />
             <Text style={styles.title}>💩 Caca: {caca}</Text>
 
             {/* Affichage de l'ours avec animation */}
             <TouchableOpacity onPress={handleClick}>
-                <Image source={frames[currentFrame]} style={styles.image} />
+                <Image source={frames[currentFrame]} style={styles.image}  />
             </TouchableOpacity>
 
             <Text style={styles.text}>Cliquez sur l'ours pour gagner des cacas !</Text>
-        </View>
+        </ImageBackground>
     );
 }
 
@@ -119,15 +123,18 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: "bold",
-        marginBottom: 20,
+        marginBottom: 10,
+        color: 'white',
     },
     image: {
-        width: 150,
-        height: 150,
+        width: 250,
+        height: 250,
+        marginLeft: 45,
+        marginTop:100,
     },
     text: {
         fontSize: 16,
-        marginTop: 20,
+        marginTop: 30,
+        color: 'white',
     },
 });
-

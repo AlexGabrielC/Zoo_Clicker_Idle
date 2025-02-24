@@ -5,7 +5,7 @@ import React from "react";
 
 export default function TabLayout() {
     return (
-        <AuthProvider>
+        // <AuthProvider>
             <GameProvider>
                 <Tabs>
                 <Tabs.Screen name="clicker" options={{ title: "Clicker" }} />
@@ -14,7 +14,7 @@ export default function TabLayout() {
                 <Tabs.Screen name="TimeClicker" options={{ title: "Contre la Montre" }} />
                 </Tabs>
             </GameProvider>
-        </AuthProvider>
+        // </AuthProvider>
     );
 }
 
