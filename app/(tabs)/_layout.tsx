@@ -7,12 +7,12 @@ export default function TabLayout() {
         <GameProvider>
             <Tabs>
                 <Tabs.Screen
-                    name="idle zoo clicker"
+                    name="Clicker"
                     options={{ title: "Clicker" }}
                 />
                 <Tabs.Screen
-                    name="quest"
-                    options={{ title: "Quest" }}
+                    name="Quetes"
+                    options={{ title: "Quetes" }}
                 />
                 <Tabs.Screen
                     name="upgrade"
