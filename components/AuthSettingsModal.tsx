@@ -15,6 +15,7 @@ const AuthSettingsModal: React.FC<AuthSettingsModalProps> = ({ onClose }) => {
     console.log('handleSignIn pressed');
     setLoading(true);
     try {
+        console.log('signInWithGoogle sent from modal triggered');
       await signInWithGoogle();
     } catch (error: any) {
       Alert.alert('Erreur de connexion', error.message || 'Une erreur est survenue.');

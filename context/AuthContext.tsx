@@ -30,6 +30,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   });
 
   useEffect(() => {
+    console.log('>>> AuthProvider useEffect started');
     const unsubscribe = auth().onAuthStateChanged((currentUser) => {
       console.log('Auth state changed:', currentUser);
       setUser(currentUser);
@@ -38,7 +39,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const signInWithGoogle = async () => {
-    console.log('signInWithGoogle triggered');
+    console.log('>>> signInWithGoogle in AuthContext started');
     try {
       // Ensure Google Play Services are available
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
