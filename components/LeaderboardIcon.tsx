@@ -4,8 +4,9 @@ import Entypo from '@expo/vector-icons/Entypo';
 import {useScore} from "@/context/ScoreContext";
 import ScoreTableModal from "@/components/ScoreTableModal"; // Importez la modal de scores
 
+
 const SettingsIcon: React.FC = () => {
-    const [isScoreModalVisible, setScoreModalVisible] = useState(false); // État pour la modal des scores
+    const [isScoreModalVisible, setScoreModalVisible] = useState(false); // État pour le modal des scores
     const { scores } = useScore(); // Utilisez le contexte des scores
 
     return (
