@@ -1,6 +1,6 @@
-# Teddy Clicker 🐻💩
+# zoo clicker idle 🐻💩
 
-Teddy Clicker est un jeu de clic amusant et addictif où vous devez collecter des "cacas" en cliquant sur un ours en peluche. Le jeu propose plusieurs fonctionnalités pour rendre l'expérience plus engageante, comme des améliorations, des quêtes, un mode contre la montre, et un système de classement basé sur les scores des joueurs.
+zoo clicker idle est un jeu de clic amusant et addictif où vous devez collecter des "cacas" en cliquant sur un ours en peluche. Le jeu propose plusieurs fonctionnalités pour rendre l'expérience plus engageante, comme des améliorations, des quêtes, un mode contre la montre, et un système de classement basé sur les scores des joueurs.
 
 ---
 
@@ -45,9 +45,9 @@ Teddy Clicker est un jeu de clic amusant et addictif où vous devez collecter de
 
 ### 1. **Cloner le dépôt**
    ```bash
-   git clone# Teddy Clicker 🐻💩
+   git clone# zoo clicker idle 🐻💩
 
-Teddy Clicker est un jeu de clic amusant et addictif où vous devez collecter des "cacas" en cliquant sur un ours en peluche. Le jeu propose plusieurs fonctionnalités pour rendre l'expérience plus engageante, comme des améliorations, des quêtes, un mode contre la montre, et un système de classement basé sur les scores des joueurs.
+zoo clicker idle est un jeu de clic amusant et addictif où vous devez collecter des "cacas" en cliquant sur un ours en peluche. Le jeu propose plusieurs fonctionnalités pour rendre l'expérience plus engageante, comme des améliorations, des quêtes, un mode contre la montre, et un système de classement basé sur les scores des joueurs.
 
 ---
 
