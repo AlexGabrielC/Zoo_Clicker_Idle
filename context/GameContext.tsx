@@ -46,7 +46,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
                 setCacaPerSecond,
             }}
         >
-            {children}  {/* Assurez-vous de rendre les enfants ici */}
+            {children}
         </GameContext.Provider>
     );
 };

@@ -18,13 +18,13 @@ const Upgrades: React.FC = () => {
 
     // Liste des améliorations avec ajout d'une propriété "icon" pour l'image
     const [upgrades, setUpgrades] = useState<Upgrade[]>([
-        { name: "Peanut Butter", baseCost: 10, costMultiplier: 1.15, baseEffect: 1, effectMultiplier: 1.1, count: 0, type: "click", icon: require("@/assets/sprites/peanut_butter.svg") },
-        { name: "Miel", baseCost: 50, costMultiplier: 1.15, baseEffect: 5, effectMultiplier: 1.1, count: 0, type: "click", icon: require("@/assets/sprites/honey.svg") },
-        { name: "Ruche", baseCost: 100, costMultiplier: 1.15, baseEffect: 10, effectMultiplier: 1.1, count: 0, type: "passive", icon: require("@/assets/sprites/hive.svg") },
+        { name: "Peanut Butter", baseCost: 10, costMultiplier: 1.15, baseEffect: 1, effectMultiplier: 1.1, count: 0, type: "click", icon: require("@/assets/sprites/peanut_butter.png") },
+        { name: "Miel", baseCost: 50, costMultiplier: 1.15, baseEffect: 5, effectMultiplier: 1.1, count: 0, type: "click", icon: require("@/assets/sprites/honey.png") },
+        { name: "Ruche", baseCost: 100, costMultiplier: 1.15, baseEffect: 10, effectMultiplier: 1.1, count: 0, type: "passive", icon: require("@/assets/sprites/hive.png") },
         // { name: "Abeilles", baseCost: 200, costMultiplier: 1.15, baseEffect: 20, effectMultiplier: 1.1, count: 0, type: "passive", icon: require("@/assets/sprites/bees.png") },
-        { name: "Saumon", baseCost: 500, costMultiplier: 1.15, baseEffect: 50, effectMultiplier: 1.1, count: 0, type: "click", icon: require("@/assets/sprites/salmon.svg") },
-        { name: "Thon", baseCost: 1000, costMultiplier: 1.15, baseEffect: 100, effectMultiplier: 1.1, count: 0, type: "passive", icon: require("@/assets/sprites/tuna.svg") },
-        { name: "Pluie de caca", baseCost: 2000, costMultiplier: 1.15, baseEffect: 200, effectMultiplier: 1.1, count: 0, type: "click", icon: require("@/assets/sprites/rain_of_caca.svg") },
+        { name: "Saumon", baseCost: 500, costMultiplier: 1.15, baseEffect: 50, effectMultiplier: 1.1, count: 0, type: "click", icon: require("@/assets/sprites/salmon.png") },
+        { name: "Thon", baseCost: 1000, costMultiplier: 1.15, baseEffect: 100, effectMultiplier: 1.1, count: 0, type: "passive", icon: require("@/assets/sprites/tuna.png") },
+        { name: "Pluie de caca", baseCost: 2000, costMultiplier: 1.15, baseEffect: 200, effectMultiplier: 1.1, count: 0, type: "click", icon: require("@/assets/sprites/rain_of_caca.png") },
         { name: "Avalanche de caca", baseCost: 4000, costMultiplier: 1.15, baseEffect: 400, effectMultiplier: 1.1, count: 0, type: "passive", icon: require("@/assets/sprites/avalanche_of_caca.svg") },
         // { name: "Caca d’or", baseCost: 8000, costMultiplier: 1.15, baseEffect: 800, effectMultiplier: 1.1, count: 0, type: "click", icon: require("@/assets/sprites/golden_caca.png") },
         // { name: "Caca arc en ciel", baseCost: 16000, costMultiplier: 1.15, baseEffect: 1600, effectMultiplier: 1.1, count: 0, type: "passive", icon: require("@/assets/sprites/rainbow_caca.png") },
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     title: {
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: "bold",
         textAlign: "center",
         marginBottom: 20,
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
         fontFamily: "Arial", // Vous pouvez personnaliser la police ici selon vos préférences
     },
     upgradeButton: {
+        width: "40%",
         backgroundColor: "rgb(168,169,168)",
         padding: 10,
         borderRadius: 10,
@@ -145,10 +146,10 @@ const styles = StyleSheet.create({
         height: 40, // Taille de l'icône à l'intérieur du cadre
     },
     upgradeText: {
-        fontSize: 16,
+        fontSize: 14,
     },
     upgradeEffect: {
-        fontSize: 14,
+        fontSize: 12,
         color: "#555",
     },
 });

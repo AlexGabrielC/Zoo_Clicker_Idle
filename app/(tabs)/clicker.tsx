@@ -16,18 +16,18 @@ export default function Clicker() {
 
     // Animation "idle_svg"
     const idleFrames = [
-        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_000.svg"),
-        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_001.svg"),
-        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_002.svg"),
-        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_003.svg"),
-        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_004.svg"),
-        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_005.svg"),
-        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_006.svg"),
-        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_007.svg"),
-        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_008.svg"),
-        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_009.svg"),
-        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_010.svg"),
-        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_011.svg"),
+        require("../../assets/animations/idle/FA_TEDDY_Idle_000.png"),
+        require("../../assets/animations/idle/FA_TEDDY_Idle_001.png"),
+        require("../../assets/animations/idle/FA_TEDDY_Idle_002.png"),
+        require("../../assets/animations/idle/FA_TEDDY_Idle_003.png"),
+        require("../../assets/animations/idle/FA_TEDDY_Idle_004.png"),
+        require("../../assets/animations/idle/FA_TEDDY_Idle_005.png"),
+        require("../../assets/animations/idle/FA_TEDDY_Idle_006.png"),
+        require("../../assets/animations/idle/FA_TEDDY_Idle_007.png"),
+        require("../../assets/animations/idle/FA_TEDDY_Idle_008.png"),
+        require("../../assets/animations/idle/FA_TEDDY_Idle_009.png"),
+        require("../../assets/animations/idle/FA_TEDDY_Idle_010.png"),
+        require("../../assets/animations/idle/FA_TEDDY_Idle_011.png"),
     ];
 
     // Animation "hurt"

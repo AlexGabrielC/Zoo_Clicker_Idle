@@ -107,7 +107,6 @@ const Quetes = () => {
                                 Progression: {quest.progress} / {quest.goal}
                             </Text>
 
-                            {/* Si la quête est terminée, afficher la récompense */}
                             {isQuestCompleted(quest) ? (
                                 <TouchableOpacity style={styles.butonReward} onPress={() => handleQuestReward(quest.id)}>
                                     <Text style={styles.butonRewardText}>Reclamer</Text>
