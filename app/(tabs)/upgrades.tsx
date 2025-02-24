@@ -80,7 +80,7 @@ const Upgrades: React.FC = () => {
                             <View style={styles.iconWrapper}>
                                 <Image source={upgrade.icon} style={styles.icon} />
                             </View>
-                            <Text style={styles.upgradeText}> {upgrade.name} (Niveau {upgrade.count + 1}) </Text>
+                            <Text style={styles.upgradeText}> {upgrade.name} (Niveau {upgrade.count}) </Text>
                             <Text style={styles.upgradeText}>Coût : {cost} caca </Text>
                             <Text style={styles.upgradeEffect}>
                                 Effet : +{effect} {upgrade.type === "click" ? "par clic " : "par seconde "}
