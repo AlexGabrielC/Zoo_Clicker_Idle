@@ -25,7 +25,7 @@ const Upgrades: React.FC = () => {
         { name: "Saumon", baseCost: 500, costMultiplier: 1.15, baseEffect: 50, effectMultiplier: 1.1, count: 0, type: "click", icon: require("@/assets/sprites/salmon.png") },
         { name: "Thon", baseCost: 1000, costMultiplier: 1.15, baseEffect: 100, effectMultiplier: 1.1, count: 0, type: "passive", icon: require("@/assets/sprites/tuna.png") },
         { name: "Pluie de caca", baseCost: 2000, costMultiplier: 1.15, baseEffect: 200, effectMultiplier: 1.1, count: 0, type: "click", icon: require("@/assets/sprites/rain_of_caca.png") },
-        { name: "Avalanche de caca", baseCost: 4000, costMultiplier: 1.15, baseEffect: 400, effectMultiplier: 1.1, count: 0, type: "passive", icon: require("@/assets/sprites/avalanche_of_caca.svg") },
+        { name: "Avalanche de caca", baseCost: 4000, costMultiplier: 1.15, baseEffect: 400, effectMultiplier: 1.1, count: 0, type: "passive", icon: require("@/assets/sprites/avalanche_of_caca.png") },
         // { name: "Caca d’or", baseCost: 8000, costMultiplier: 1.15, baseEffect: 800, effectMultiplier: 1.1, count: 0, type: "click", icon: require("@/assets/sprites/golden_caca.png") },
         // { name: "Caca arc en ciel", baseCost: 16000, costMultiplier: 1.15, baseEffect: 1600, effectMultiplier: 1.1, count: 0, type: "passive", icon: require("@/assets/sprites/rainbow_caca.png") },
     ]);
