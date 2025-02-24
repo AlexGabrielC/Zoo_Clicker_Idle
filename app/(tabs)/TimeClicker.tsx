@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image, Modal, Button } from "react-native";
+import {View, Text, TouchableOpacity, StyleSheet, Image, Modal, Button, ImageBackground} from "react-native";
 import { GameContext } from "@/context/GameContext"; // Importez le contexte
 import { useNavigation, useFocusEffect } from "@react-navigation/native"; // Importez useNavigation et useFocusEffect
 
@@ -65,7 +65,11 @@ export default function TimedClicker() {
     }, [navigation]);
 
     return (
-        <View style={styles.container}>
+        <ImageBackground
+            source={require("../../assets/images/fond.png")}
+            style={styles.container}
+            imageStyle={{ resizeMode: 'cover', height: '100%', width: '100%' }}
+        >
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -82,7 +86,7 @@ export default function TimedClicker() {
 
             {!isModalVisible && (
                 <>
-                    <Text style={styles.title}>Temps restant: {timeLeft} secondes</Text>
+                    <Text style={styles.titletime}>Temps restant: {timeLeft} secondes</Text>
                     <Text style={styles.title}>💩 Score: {score}</Text>
 
                     {isGameOver ? (
@@ -99,25 +103,51 @@ export default function TimedClicker() {
                     )}
                 </>
             )}
-        </View>
+        </ImageBackground>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
         backgroundColor: "#f0f0f0",
     },
     title: {
-        fontSize: 24,
+        fontSize: 36, // Augmenter la taille de police pour un titre plus grand
         fontWeight: "bold",
-        marginBottom: 20,
+        textAlign: "center",
+        color: '#ffffff', // Texte en blanc
+        textShadowColor: '#000', // Ombre du texte
+        textShadowOffset: { width: 2, height: 2 }, // Définir l'offset de l'ombre
+        textShadowRadius: 5, // Rayon de l'ombre
+        backgroundColor: 'rgba(0, 0, 0, 0.4)', // Fond légèrement sombre derrière le texte
+        padding: 10,
+        borderRadius: 10,
+        marginBottom: 100,  // Ajuster la marge pour positionner le titre plus haut
+        marginHorizontal: 20,
+    },
+    titletime: {
+        fontSize: 36, // Augmenter la taille de police pour un titre plus grand
+        fontWeight: "bold",
+        textAlign: "center",
+        color: '#ffffff', // Texte en blanc
+        textShadowColor: '#000', // Ombre du texte
+        textShadowOffset: { width: 2, height: 2 }, // Définir l'offset de l'ombre
+        textShadowRadius: 5, // Rayon de l'ombre
+        backgroundColor: 'rgba(0, 0, 0, 0.4)', // Fond légèrement sombre derrière le texte
+        padding: 10,
+        borderRadius: 10,
+        marginTop: 40,
+        marginBottom: 80,  // Ajuster la marge pour positionner le titre plus haut
+        marginHorizontal: 20,
     },
     image: {
-        width: 150,
-        height: 150,
+        width: 250,
+        height: 250,
+        marginLeft: 55,
+        marginTop: 10,
     },
     gameOverText: {
         fontSize: 20,

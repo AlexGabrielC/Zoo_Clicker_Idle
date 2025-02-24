@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import {View, Text, TouchableOpacity, StyleSheet, Image, ImageSourcePropType} from "react-native";
+import {View, Text, TouchableOpacity, StyleSheet, Image, ImageSourcePropType, ImageBackground} from "react-native";
 import { GameContext } from "@/context/GameContext";
 
 interface Upgrade {
@@ -53,8 +53,13 @@ const Upgrades: React.FC = () => {
     };
 
     return (
+        <ImageBackground
+            source={require("../../assets/images/fond_up.png")}
+            style={styles.containerfd}
+            imageStyle={{ resizeMode: 'cover', height: '100%', width: '100%' }}
+        >
         <View style={styles.container}>
-            <Text style={styles.title}>Améliorations disponibles :</Text>
+            <Text style={styles.title}>Nourriture disponibles :</Text>
 
             {upgrades.map((upgrade) => {
                 const cost = Math.floor(upgrade.baseCost * Math.pow(upgrade.costMultiplier, upgrade.count));
@@ -62,41 +67,52 @@ const Upgrades: React.FC = () => {
                 const isAffordable = caca >= cost && upgrade.count === 0;
 
                 return (
-                    <TouchableOpacity
-                        key={upgrade.name}
-                        style={[
-                            styles.upgradeButton,
-                            upgrade.count > 0 && styles.boughtButton, // Si l'objet a déjà été acheté
-                            isAffordable && styles.affordableButton, // Si l'objet est achetable
-                        ]}
-                        onPress={() => buyUpgrade(upgrade)}
-                        disabled={caca < cost}
-                    >
-                        <View style={styles.iconWrapper}>
-                            <Image source={upgrade.icon} style={styles.icon} />
-                        </View>
-                        <Text style={styles.upgradeText}>
-                            {upgrade.name} (Niveau {upgrade.count + 1})
-                        </Text>
-                        <Text style={styles.upgradeText}>Coût : {cost} caca</Text>
-                        <Text style={styles.upgradeEffect}>
-                            Effet : +{effect} {upgrade.type === "click" ? "par clic" : "par seconde"}
-                        </Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity
+                            key={upgrade.name}
+                            style={[
+                                styles.upgradeButton,
+                                upgrade.count > 0 && styles.boughtButton, // Si l'objet a déjà été acheté
+                                isAffordable && styles.affordableButton, // Si l'objet est achetable
+                            ]}
+                            onPress={() => buyUpgrade(upgrade)}
+                            disabled={caca < cost}
+                        >
+                            <View style={styles.iconWrapper}>
+                                <Image source={upgrade.icon} style={styles.icon} />
+                            </View>
+                            <Text style={styles.upgradeText}> {upgrade.name} (Niveau {upgrade.count + 1}) </Text>
+                            <Text style={styles.upgradeText}>Coût : {cost} caca </Text>
+                            <Text style={styles.upgradeEffect}>
+                                Effet : +{effect} {upgrade.type === "click" ? "par clic " : "par seconde "}
+                            </Text>
+                        </TouchableOpacity>
                 );
             })}
         </View>
+        </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
+    containerfd: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#f0f0f0",
+    },
     container: {
         padding: 20,
     },
     title: {
-        fontSize: 20,
+        fontSize: 24,
         fontWeight: "bold",
-        marginBottom: 10,
+        textAlign: "center",
+        marginBottom: 20,
+        color: "#a1e164", // Une couleur naturelle, douce et moderne
+        textShadowColor: "#000", // Ombre douce, correspondant au dégradé du fond
+        textShadowOffset: { width: 3, height: 3 }, // Décalage pour l'effet de bord
+        textShadowRadius: 3, // Rayon de l'ombre pour plus de douceur
+        fontFamily: "Arial", // Vous pouvez personnaliser la police ici selon vos préférences
     },
     upgradeButton: {
         backgroundColor: "rgb(168,169,168)",

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
+import { Text, Image, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
 import { GameContext } from "@/context/GameContext"; // Importez le contexte
 import * as Notifications from 'expo-notifications';
 import { AppState } from 'react-native';
@@ -13,31 +13,31 @@ export default function Clicker() {
 
     // Animation "idle"
     const idleFrames = [
-        require("../../assets/animations/idle/FA_TEDDY_Idle_000.png"),
-        require("../../assets/animations/idle/FA_TEDDY_Idle_001.png"),
-        require("../../assets/animations/idle/FA_TEDDY_Idle_002.png"),
-        require("../../assets/animations/idle/FA_TEDDY_Idle_003.png"),
-        require("../../assets/animations/idle/FA_TEDDY_Idle_004.png"),
-        require("../../assets/animations/idle/FA_TEDDY_Idle_005.png"),
-        require("../../assets/animations/idle/FA_TEDDY_Idle_006.png"),
-        require("../../assets/animations/idle/FA_TEDDY_Idle_007.png"),
-        require("../../assets/animations/idle/FA_TEDDY_Idle_008.png"),
-        require("../../assets/animations/idle/FA_TEDDY_Idle_009.png"),
-        require("../../assets/animations/idle/FA_TEDDY_Idle_010.png"),
-        require("../../assets/animations/idle/FA_TEDDY_Idle_011.png"),
+        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_000.svg"),
+        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_001.svg"),
+        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_002.svg"),
+        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_003.svg"),
+        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_004.svg"),
+        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_005.svg"),
+        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_006.svg"),
+        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_007.svg"),
+        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_008.svg"),
+        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_009.svg"),
+        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_010.svg"),
+        require("../../assets/animations/idle_svg/FA_TEDDY_Idle_011.svg"),
     ];
 
     // Animation "hurt"
     const hurtFrames = [
-        require("../../assets/animations/hurt/FA_TEDDY_Hurt_000.png"),
-        require("../../assets/animations/hurt/FA_TEDDY_Hurt_001.png"),
-        require("../../assets/animations/hurt/FA_TEDDY_Hurt_002.png"),
-        require("../../assets/animations/hurt/FA_TEDDY_Hurt_003.png"),
-        require("../../assets/animations/hurt/FA_TEDDY_Hurt_004.png"),
-        require("../../assets/animations/hurt/FA_TEDDY_Hurt_005.png"),
+        require("../../assets/animations/hurt_svg/FA_TEDDY_Hurt_000.svg"),
+        require("../../assets/animations/hurt_svg/FA_TEDDY_Hurt_001.svg"),
+        require("../../assets/animations/hurt_svg/FA_TEDDY_Hurt_002.svg"),
+        require("../../assets/animations/hurt_svg/FA_TEDDY_Hurt_003.svg"),
+        require("../../assets/animations/hurt_svg/FA_TEDDY_Hurt_004.svg"),
+        require("../../assets/animations/hurt_svg/FA_TEDDY_Hurt_005.svg"),
     ];
 
-    // Choisir le bon tableau d'images en fonction de l'état (idle ou hurt)
+    // Choisir le bon tableau d'images en fonction des états (idle ou hurt).
     const frames = isHurt ? hurtFrames : idleFrames;
 
     // Fonction pour gérer l'inactivité et planifier la notification
@@ -56,7 +56,7 @@ export default function Clicker() {
         await Notifications.scheduleNotificationAsync({
             content: {
                 title: "Hey, tu es inactif !",
-                body: "Tu n'a pas récuperer le caca de ton ours !",
+                body: "Tu n'a pas récupérer le caca de ton ours !",
             },
             trigger: {
                 type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, // Le type de trigger : déclenchement basé sur un intervalle de temps
@@ -101,6 +101,7 @@ export default function Clicker() {
             imageStyle={{ resizeMode: 'cover', height: '100%', width: '100%' }}
         >
             <SettingsIcon />
+            {/* Titre stylisé, plus haut */}
             <Text style={styles.title}>💩 Caca: {caca}</Text>
 
             {/* Affichage de l'ours avec animation */}
@@ -121,20 +122,38 @@ const styles = StyleSheet.create({
         backgroundColor: "#f0f0f0",
     },
     title: {
-        fontSize: 24,
+        fontSize: 36, // Augmenter la taille de police pour un titre plus grand
         fontWeight: "bold",
-        marginBottom: 10,
-        color: 'white',
+        textAlign: "center",
+        color: '#ffffff', // Texte en blanc
+        textShadowColor: '#000', // Ombre du texte
+        textShadowOffset: { width: 2, height: 2 }, // Définir l'offset de l'ombre
+        textShadowRadius: 5, // Rayon de l'ombre
+        backgroundColor: 'rgba(0, 0, 0, 0.4)', // Fond légèrement sombre derrière le texte
+        padding: 10,
+        borderRadius: 10,
+        marginBottom: 100,  // Ajuster la marge pour positionner le titre plus haut
+        marginHorizontal: 20,
     },
     image: {
         width: 250,
         height: 250,
         marginLeft: 45,
-        marginTop:100,
+        marginTop: 100,
     },
     text: {
-        fontSize: 16,
+        fontSize: 20, // Augmenter la taille du texte
+        fontWeight: "600", // Légère mise en gras pour un effet plus marquant
+        color: '#c3cca8', // Couleur dorée pour attirer l'attention
+        textAlign: "center", // Centrer le texte
+        textShadowColor: '#000', // Ombre du texte pour plus de contraste
+        textShadowOffset: { width: 2, height: 2 }, // Positionner l'ombre
+        textShadowRadius: 5, // Douceur de l'ombre
         marginTop: 30,
-        color: 'white',
+        backgroundColor: 'rgba(0, 0, 0, 0.3)', // Fond sombre derrière le texte pour améliorer la lisibilité
+        padding: 10,
+        borderRadius: 10,
+        marginHorizontal: 30, // Plus d'espace autour du texte
     },
+
 });
