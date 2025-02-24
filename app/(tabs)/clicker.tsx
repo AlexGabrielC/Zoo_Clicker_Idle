@@ -153,7 +153,8 @@ const styles = StyleSheet.create({
         textShadowColor: '#000', // Ombre du texte pour plus de contraste
         textShadowOffset: { width: 2, height: 2 }, // Positionner l'ombre
         textShadowRadius: 5, // Douceur de l'ombre
-        marginTop: 30,
+        position: 'absolute', // Position absolue pour le positionnement
+        bottom: 450, // Positionner le texte en bas
         backgroundColor: 'rgba(0, 0, 0, 0.3)', // Fond sombre derrière le texte pour améliorer la lisibilité
         padding: 10,
         borderRadius: 10,

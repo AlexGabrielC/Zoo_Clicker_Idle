@@ -77,19 +77,22 @@ const Upgrades: React.FC = () => {
                             onPress={() => buyUpgrade(upgrade)}
                             disabled={caca < cost}
                         >
+
                             <View style={styles.iconWrapper}>
                                 <Image source={upgrade.icon} style={styles.icon} />
                             </View>
-                            <Text style={styles.upgradeGroup}>
-                                <Text style={styles.upgradeName}> 
-                                    <Text > {upgrade.name} </Text>
-                                    <Text > Lvl : {upgrade.count} </Text>
-                                </Text>
-                                <Text style={styles.upgradeText}>Coût : {cost} caca </Text>
+                            <View style={styles.upgradeGroup}>
+                                <View style={styles.upgradeCombo}> 
+                                    <View style={styles.upgradeName}> 
+                                        <Text > {upgrade.name} </Text>
+                                        <Text > Lvl : {upgrade.count} </Text>
+                                    </View>
+                                    <Text style={styles.upgradeText}>Coût : {cost} caca </Text>
+                                </View>
                                 <Text style={styles.upgradeEffect}>
                                     Effet : +{effect} {upgrade.type === "click" ? "par clic " : "par seconde "}
                                 </Text>
-                            </Text>
+                            </View>
                         </TouchableOpacity>
                 );
             })}
@@ -110,10 +113,10 @@ const styles = StyleSheet.create({
         marginBottom: 100,
     },
     title: {
-        fontSize: 20,
+        fontSize: 17,
         fontWeight: "bold",
         textAlign: "center",
-        marginBottom: 20,
+        marginBottom: 10,
         color: "#a1e164", // Une couleur naturelle, douce et moderne
         textShadowColor: "#000", // Ombre douce, correspondant au dégradé du fond
         textShadowOffset: { width: 3, height: 3 }, // Décalage pour l'effet de bord
@@ -125,7 +128,7 @@ const styles = StyleSheet.create({
         backgroundColor: "rgb(168,169,168)",
         padding: 10,
         borderRadius: 10,
-        marginBottom: 10,
+        marginBottom: 5,
         flexDirection: "row", // Disposition en ligne pour l'image et le texte
         alignItems: "center", // Aligner les éléments verticalement
         borderWidth: 4, // Largeur du cadre
@@ -159,7 +162,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
     },
     upgradeText: {
-        fontSize: 14,
+        fontSize: 11,
         right: 0,
     },
     upgradeName: {
@@ -167,11 +170,11 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         flexBasis: 'auto',
         flexDirection: "column",
-        fontSize: 14,
+        fontSize: 11,
     },
     upgradeEffect: {
-        fontSize: 12,
-        color: "#555",
+        fontSize: 9,
+        color: "#0ff",
         bottom: 0,
         left: 0,
     },
