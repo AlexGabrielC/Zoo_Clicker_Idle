@@ -8,10 +8,10 @@ export default function TabLayout() {
         <AuthProvider>
             <GameProvider>
                 <Tabs>
-                <Tabs.Screen name="idle zoo clicker" options={{ title: "Clicker" }} />
-                <Tabs.Screen name="quest" options={{ title: "Quest" }} />
-                <Tabs.Screen name="upgrade" options={{ title: "Améliorations" }} />
-                <Tabs.Screen name="timedClicker" options={{ title: "Contre la Montre" }} />
+                <Tabs.Screen name="clicker" options={{ title: "Clicker" }} />
+                <Tabs.Screen name="quetes" options={{ title: "Quest" }} />
+                <Tabs.Screen name="upgrades" options={{ title: "Améliorations" }} />
+                <Tabs.Screen name="TimeClicker" options={{ title: "Contre la Montre" }} />
                 </Tabs>
             </GameProvider>
         </AuthProvider>
