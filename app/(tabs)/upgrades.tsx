@@ -80,10 +80,15 @@ const Upgrades: React.FC = () => {
                             <View style={styles.iconWrapper}>
                                 <Image source={upgrade.icon} style={styles.icon} />
                             </View>
-                            <Text style={styles.upgradeText}> {upgrade.name} (Niveau {upgrade.count}) </Text>
-                            <Text style={styles.upgradeText}>Coût : {cost} caca </Text>
-                            <Text style={styles.upgradeEffect}>
-                                Effet : +{effect} {upgrade.type === "click" ? "par clic " : "par seconde "}
+                            <Text style={styles.upgradeGroup}>
+                                <Text style={styles.upgradeName}> 
+                                    <Text > {upgrade.name} </Text>
+                                    <Text > Lvl : {upgrade.count} </Text>
+                                </Text>
+                                <Text style={styles.upgradeText}>Coût : {cost} caca </Text>
+                                <Text style={styles.upgradeEffect}>
+                                    Effet : +{effect} {upgrade.type === "click" ? "par clic " : "par seconde "}
+                                </Text>
                             </Text>
                         </TouchableOpacity>
                 );
@@ -102,6 +107,7 @@ const styles = StyleSheet.create({
     },
     container: {
         padding: 20,
+        marginBottom: 50,
     },
     title: {
         fontSize: 20,
@@ -115,7 +121,7 @@ const styles = StyleSheet.create({
         fontFamily: "Arial", // Vous pouvez personnaliser la police ici selon vos préférences
     },
     upgradeButton: {
-        width: "40%",
+        width: 320,
         backgroundColor: "rgb(168,169,168)",
         padding: 10,
         borderRadius: 10,
@@ -145,12 +151,29 @@ const styles = StyleSheet.create({
         width: 40, // Taille de l'icône à l'intérieur du cadre
         height: 40, // Taille de l'icône à l'intérieur du cadre
     },
+    upgradeGroup: {
+        display: "flex",
+        flexWrap: "wrap",
+        flexBasis: 'auto',
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
     upgradeText: {
+        fontSize: 14,
+        right: 0,
+    },
+    upgradeName: {
+        display: "flex",
+        flexWrap: "wrap",
+        flexBasis: 'auto',
+        flexDirection: "column",
         fontSize: 14,
     },
     upgradeEffect: {
         fontSize: 12,
         color: "#555",
+        bottom: 0,
+        left: 0,
     },
 });
 
