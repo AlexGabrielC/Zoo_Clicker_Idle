@@ -4,7 +4,7 @@ import { GameContext } from "@/context/GameContext"; // Importez le contexte
 import * as Notifications from 'expo-notifications';
 import { AppState } from 'react-native';
 import SettingsIcon from "@/components/SettingsIcon";
-import ScoreTableModal from "@/components/ScoreTableModal"; // Importez la modal de scores
+import LeaderboardIcon from "@/components/LeaderboardIcon";
 import { useScore } from "@/context/ScoreContext"; // Importez le contexte des scores
 
 export default function Clicker() {
@@ -13,7 +13,6 @@ export default function Clicker() {
     const [currentFrame, setCurrentFrame] = useState(0); // Frame actuelle de l'animation
     const [isHurt, setIsHurt] = useState(false); // État pour déterminer si l'ours est blessé
     const [lastActivity, setLastActivity] = useState(Date.now()); // Dernière activité utilisateur
-    const [isScoreModalVisible, setScoreModalVisible] = useState(false); // État pour la modal des scores
 
     // Animation "idle_svg"
     const idleFrames = [
@@ -105,6 +104,7 @@ export default function Clicker() {
             imageStyle={{ width: '100%', height: '100%' }} // Assurez-vous que l'image couvre tout le conteneur
         >
             <SettingsIcon />
+            <LeaderboardIcon />
             <Text style={styles.title}>💩 Caca: {caca}</Text>
 
             {/* Affichage de l'ours avec animation */}
@@ -114,17 +114,6 @@ export default function Clicker() {
 
             <Text style={styles.text}>Cliquez sur l'ours pour gagner des cacas !</Text>
 
-            {/* Bouton pour ouvrir la modal des scores */}
-            <TouchableOpacity style={styles.button} onPress={() => setScoreModalVisible(true)}>
-                <Text style={styles.buttonText}>Voir les Scores</Text>
-            </TouchableOpacity>
-
-            {/* Modal des scores */}
-            <ScoreTableModal
-                visible={isScoreModalVisible}
-                onClose={() => setScoreModalVisible(false)}
-                scores={scores}
-            />
         </ImageBackground>
     );
 }
