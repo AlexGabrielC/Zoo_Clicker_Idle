@@ -4,14 +4,18 @@ import { GameContext } from "@/context/GameContext"; // Importez le contexte
 import * as Notifications from 'expo-notifications';
 import { AppState } from 'react-native';
 import SettingsIcon from "@/components/SettingsIcon";
+import ScoreTableModal from "@/components/ScoreTableModal"; // Importez la modal de scores
+import { useScore } from "@/context/ScoreContext"; // Importez le contexte des scores
 
 export default function Clicker() {
     const { caca, setCaca, cacaPerClick } = useContext(GameContext); // Utilisez le contexte
+    const { scores } = useScore(); // Utilisez le contexte des scores
     const [currentFrame, setCurrentFrame] = useState(0); // Frame actuelle de l'animation
     const [isHurt, setIsHurt] = useState(false); // État pour déterminer si l'ours est blessé
     const [lastActivity, setLastActivity] = useState(Date.now()); // Dernière activité utilisateur
+    const [isScoreModalVisible, setScoreModalVisible] = useState(false); // État pour la modal des scores
 
-    // Animation "idle"
+    // Animation "idle_svg"
     const idleFrames = [
         require("../../assets/animations/idle_svg/FA_TEDDY_Idle_000.svg"),
         require("../../assets/animations/idle_svg/FA_TEDDY_Idle_001.svg"),
@@ -52,7 +56,6 @@ export default function Clicker() {
     }, [lastActivity]);
 
     const scheduleNotification = async () => {
-
         await Notifications.scheduleNotificationAsync({
             content: {
                 title: "Hey, tu es inactif !",
@@ -60,7 +63,7 @@ export default function Clicker() {
             },
             trigger: {
                 type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, // Le type de trigger : déclenchement basé sur un intervalle de temps
-                seconds: 60, // Temps d'attente avant d'envoyer la notification (ici, 60 secondes)
+                seconds: 3600, // Temps d'attente avant d'envoyer la notification (ici, 60 secondes)
             }
         });
     };
@@ -83,33 +86,45 @@ export default function Clicker() {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentFrame((prevFrame) => (prevFrame + 1) % frames.length); // On passe à la frame suivante
-        }, 100); // Intervalle de 100ms entre chaque image
+        }, 1000 / 12); // Intervalle de 50 ms entre chaque image
 
         return () => clearInterval(interval); // Cleanup de l'intervalle lors du démontage du composant
     }, [isHurt]); // Recréer l'intervalle lorsque l'état de l'animation change
 
     const handleClick = () => {
         setCaca(caca + cacaPerClick); // À chaque clic, on ajoute du caca en fonction de cacaPerClick
-        setIsHurt(true); // Mettre l'état "hurt" quand on clique
-        setTimeout(() => setIsHurt(false), 500); // Revenir à l'animation "idle" après 500ms
+        setIsHurt(true); // Mettre l'état "hurt_svg" quand on clique
+        setTimeout(() => setIsHurt(false), 1000 / 6); // Revenir à l'animation "idle_svg" après 300ms
     };
 
     return (
         <ImageBackground
             source={require("../../assets/images/fond.png")}
             style={styles.container}
-            imageStyle={{ resizeMode: 'cover', height: '100%', width: '100%' }}
+            resizeMode="cover" // Utilisez props au lieu de style
+            imageStyle={{ width: '100%', height: '100%' }} // Assurez-vous que l'image couvre tout le conteneur
         >
             <SettingsIcon />
-            {/* Titre stylisé, plus haut */}
             <Text style={styles.title}>💩 Caca: {caca}</Text>
 
             {/* Affichage de l'ours avec animation */}
             <TouchableOpacity onPress={handleClick}>
-                <Image source={frames[currentFrame]} style={styles.image}  />
+                <Image source={frames[currentFrame]} style={styles.image} />
             </TouchableOpacity>
 
             <Text style={styles.text}>Cliquez sur l'ours pour gagner des cacas !</Text>
+
+            {/* Bouton pour ouvrir la modal des scores */}
+            <TouchableOpacity style={styles.button} onPress={() => setScoreModalVisible(true)}>
+                <Text style={styles.buttonText}>Voir les Scores</Text>
+            </TouchableOpacity>
+
+            {/* Modal des scores */}
+            <ScoreTableModal
+                visible={isScoreModalVisible}
+                onClose={() => setScoreModalVisible(false)}
+                scores={scores}
+            />
         </ImageBackground>
     );
 }
@@ -155,5 +170,15 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginHorizontal: 30, // Plus d'espace autour du texte
     },
-
+    button: {
+        backgroundColor: '#4285F4',
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 5,
+        marginBottom: 10,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+    },
 });

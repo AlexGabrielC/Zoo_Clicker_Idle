@@ -1,17 +1,18 @@
-// AuthContext.tsx
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import auth from '@react-native-firebase/auth';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { supabase } from '@/supabase'; // Assurez-vous d'avoir configuré Supabase
+import { Session } from '@supabase/supabase-js';
 
 interface AuthContextProps {
-  user: any;
-  signInWithGoogle: () => Promise<void>;
+  user: Session | null;
+  signUp: (email: string, password: string) => Promise<void>;
+  signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextProps>({
   user: null,
-  signInWithGoogle: async () => {},
+  signUp: async () => {},
+  signIn: async () => {},
   signOut: async () => {},
 });
 
@@ -22,61 +23,59 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<any>(null);
-
-  // Configure Google Signin (make sure your webClientId is correct)
-  GoogleSignin.configure({
-    webClientId: '868939013927-cbd8ckcj8rj2io62nrd37qa8aasmet65.apps.googleusercontent.com',
-  });
+  const [user, setUser] = useState<Session | null>(null);
 
   useEffect(() => {
-    console.log('>>> AuthProvider useEffect started');
-    const unsubscribe = auth().onAuthStateChanged((currentUser) => {
-      console.log('Auth state changed:', currentUser);
-      setUser(currentUser);
+    // Vérifier la session actuelle au chargement
+    const session = supabase.auth.session();
+    setUser(session?.user || null);
+
+    // Écouter les changements d'état d'authentification
+    const { data: authListener } = supabase.auth.onAuthStateChange((event: any, session: { user: any; }) => {
+      console.log('Auth state changed:', event, session);
+      setUser(session?.user || null);
     });
-    return unsubscribe;
+
+    return () => {
+      authListener?.unsubscribe();
+    };
   }, []);
 
-  const signInWithGoogle = async () => {
-    console.log('>>> signInWithGoogle in AuthContext started');
+  const signUp = async (email: string, password: string) => {
     try {
-      // Ensure Google Play Services are available
-      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-      console.log('Google Play Services are available');
+      const { user, error } = await supabase.auth.signUp({ email, password });
+      if (error) throw error;
+      setUser(user);
+    } catch (error) {
+      console.error('Error signing up:', error);
+      throw error;
+    }
+  };
 
-      // Launch Google Sign-In flow
-      const result = await GoogleSignin.signIn();
-      console.log('Google Sign-In result:', result);
-
-      const { idToken } = result as unknown as { idToken: string };
-      if (!idToken) {
-        throw new Error('No idToken returned');
-      }
-
-      // Create Firebase credential with the token
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      await auth().signInWithCredential(googleCredential);
-      console.log('Firebase sign-in successful');
-    } catch (error: any) {
-      console.error('Error during Google sign in: ', error);
+  const signIn = async (email: string, password: string) => {
+    try {
+      const { user, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      setUser(user);
+    } catch (error) {
+      console.error('Error signing in:', error);
       throw error;
     }
   };
 
   const signOut = async () => {
     try {
-      await auth().signOut();
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
       setUser(null);
-      await GoogleSignin.signOut();
-      console.log('User signed out successfully');
     } catch (error) {
-      console.error('Error during sign out: ', error);
+      console.error('Error signing out:', error);
+      throw error;
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, signInWithGoogle, signOut }}>
+    <AuthContext.Provider value={{ user, signUp, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
