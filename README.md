@@ -2,6 +2,8 @@
 
 Zoo Clicker Idle est un jeu de clic amusant et addictif où vous devez collecter des "cacas" en cliquant sur un ours en peluche. Le jeu propose plusieurs fonctionnalités pour rendre l'expérience plus engageante, comme des améliorations, des quêtes, un mode contre la montre, et un système de classement basé sur les scores des joueurs.
 
+On a aussi une chaine youtube pour illustrer nos propos : cliquez [Ici]( https://www.youtube.com/@alexchitu7777)
+
 ---
 
 ## Fonctionnalités principales
