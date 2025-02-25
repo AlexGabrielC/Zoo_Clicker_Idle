@@ -94,3 +94,15 @@ zoo clicker idle est un jeu de clic amusant et addictif où vous devez collecter
    ```bash
    git clone https://github.com/AlexGabrielC/Zoo_Clicker_Idle
    cd teddy-clicker
+
+### 2. **lancer  le projet**  
+   ```bash
+   npm start ou npx expo start
+
+### 3. **Créer une apk **  
+   Il faut d'abord se connecter à expo avec 
+   ```bash
+   expo login
+   expo eas build
+
+Une fois ces commandes utiliser vous aurez un Qrcide generer et vous pourrez utiliser l'application soit sur expo soit avec l'apk soit en local sur une page web.
